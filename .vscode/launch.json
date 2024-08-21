@@ -8,7 +8,9 @@
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "jlink",
+            // Replace with your path
             "serverpath": "/bin/JLinkGDBServer",
+            // Replace with your path
             // This may need to be "arm-none-eabi-gdb" for some previous builds
             "gdbPath" : "/bin/arm-none-eabi-gdb",
             "device": "RP2040_M0_0",
@@ -23,19 +25,31 @@
             "showDevDebugOutput": "raw"
         },
         {
-            "name": "openocd Debug",
+            "name": "Pico Debug",
             "cwd": "${workspaceRoot}",
             "executable": "${command:cmake.launchTargetPath}",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "openocd",
-            "device": "Pico2040",
-            "serverpath": "~/openocd/src/openocd",
-            //"runToMain": true,
-            "configFiles": ["interface/cmsis-dap.cfg", "target/rp2040.cfg"],
-            "searchDir": ["~/openocd/tcl"],
-            "svdFile": "${env:PICO_SDK_PATH}/src/rp2040/hardware_regs/rp2040.svd",
+            // Replace with your path
+            "serverpath": "/home/prlx/openocd/src/openocd",
+            // This may need to be arm-none-eabi-gdb depending on your system
             "gdbPath" : "/bin/arm-none-eabi-gdb",
-        },
+            "device": "Pico2040",
+            "configFiles": [
+                // Replace with your paths
+                "/home/prlx/openocd/tcl/interface/cmsis-dap.cfg",
+                "/home/prlx/openocd/tcl/target/rp2040.cfg"
+            ],
+            "svdFile": "${env:PICO_SDK_PATH}/src/rp2040/hardware_regs/rp2040.svd",
+            "runToMain": true,
+            // Replace with your path
+            "searchDir": ["/home/prlx/openocd/tcl"],
+            // Work around for stopping at main on restart
+            "postRestartCommands": [
+                "break main",
+                "continue"
+            ]
+        }
     ],
 }
